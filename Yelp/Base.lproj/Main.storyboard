@@ -124,6 +124,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Yelp" id="qxD-Ll-MpJ">
                         <barButtonItem key="leftBarButtonItem" title="Filters" id="l3F-wY-VEn">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="tTF-Gl-fLZ" kind="modal" id="fZp-LF-m78"/>
                             </connections>
@@ -221,11 +222,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="vpb-a0-OiK">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="PWb-TS-s3a">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onCancelButton:" destination="pW6-cu-SmI" id="JPg-8N-qoQ"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Search" id="gjQ-6G-Utl">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onSearchButton:" destination="pW6-cu-SmI" id="1kA-V4-j6C"/>
                             </connections>

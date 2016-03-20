@@ -32,7 +32,7 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-
+![Video Walkthrough](assignment2-coderschool.gif)
 
 ## Notes
 

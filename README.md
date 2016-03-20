@@ -1,34 +1,45 @@
-### Basic Yelp client
+# assignment 2 - *Yelp*
 
-This is a headless example of how to implement an OAuth 1.0a Yelp API client. The Yelp API provides an application token that allows applications to make unauthenticated requests to their search API.
+**Yelp** is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
 
-### Next steps
+Time spent: 22 hours spent in total
 
-- Check out `BusinessesViewController.swift` to see how to use the `Business` model.
+## User Stories
 
-### Sample request
+The following **required** functionality is completed:
 
-**Basic search with query**
+- [X] Search results page
+- [X] Table rows should be dynamic height according to the content height.
+- [X] Custom cells should have the proper Auto Layout constraints.
+- [X] Search bar should be in the navigation bar (doesn't have to expand to show location like the real Yelp app does).
+- [X] Filter page. Unfortunately, not all the filters are supported in the Yelp API.
+- [X] The filters you should actually have are: category, sort (best match, distance, highest rated), distance, deals (on/off).
+- [X] The filters table should be organized into sections as in the mock.
+- [] You can use the default UISwitch for on/off states.
+- [X] Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
+- [X] Display some of the available Yelp categories (choose any 3-4 that you want).
 
-```
-Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-    self.businesses = businesses
-    
-    for business in businesses {
-        print(business.name!)
-        print(business.address!)
-    }
-})
-```
+The following **optional** features are implemented:
 
-**Advanced search with categories, sort, and deal filters**
+- [ ] Search results page
+- [ ] Infinite scroll for restaurant results.
 
-```
-Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
 
-    for business in businesses {
-        print(business.name!)
-        print(business.address!)
-    }
-}
-```
+The following **additional** features are implemented:
+
+- [X] Modification in the original layout
+
+Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
+
+1. how to put the spinner to give a user feed back
+2. use of delegate or oder methods of pass data between different views
+
+## Video Walkthrough
+
+
+
+## Notes
+
+* Really not easy to know how delegate work. Most time follow the video guide so will spend more time to research about passing data from view and controller.
+* But till now, almost know how an app work as parse data from API and display it, chnage something, moving around some scene. Awesome.
+

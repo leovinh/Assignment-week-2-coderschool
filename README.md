@@ -15,7 +15,7 @@ The following **required** functionality is completed:
 - [X] Filter page. Unfortunately, not all the filters are supported in the Yelp API.
 - [X] The filters you should actually have are: category, sort (best match, distance, highest rated), distance, deals (on/off).
 - [X] The filters table should be organized into sections as in the mock.
-- [] You can use the default UISwitch for on/off states.
+- [ ] You can use the default UISwitch for on/off states.
 - [X] Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
 - [X] Display some of the available Yelp categories (choose any 3-4 that you want).
 
@@ -29,10 +29,6 @@ The following **additional** features are implemented:
 
 - [X] Modification in the original layout
 
-Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
-
-1. how to put the spinner to give a user feed back
-2. use of delegate or oder methods of pass data between different views
 
 ## Video Walkthrough
 

@@ -8,11 +8,12 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate {
 
     
     @IBOutlet weak var tableView: UITableView!
     
+    var searchText = "Restaurants"
     var businesses: [Business]!
     var searchBar: UISearchBar!
     override func viewDidLoad() {
@@ -20,6 +21,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         searchBar = UISearchBar()
         searchBar.sizeToFit()
+        searchBar.delegate = self
         navigationItem.titleView = searchBar
         //searchBar.delegate = self
         
@@ -60,6 +62,25 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         // Dispose of any resources that can be recreated.
     }
     
+    // search feature
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchWithTerm(searchText)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
+    }
+    
+    func searchWithTerm(term: String) {
+        Business.searchWithTerm(term) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if businesses != nil {
             return businesses!.count
@@ -96,7 +117,9 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         let sortMode : YelpSortMode = YelpSortMode(rawValue: sortBy)!
         
-        Business.searchWithTerm("Restaurants", sort: sortMode, categories: categories, deals: isDeal, distance: distance) { (businesses:[Business]!, error: NSError!) -> Void in
+        let name : String = searchBar.text!;
+        
+        Business.searchWithTerm(name, sort: sortMode, categories: categories, deals: isDeal, distance: distance) { (businesses:[Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
         }

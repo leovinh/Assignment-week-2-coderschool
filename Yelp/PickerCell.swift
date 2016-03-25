@@ -13,13 +13,18 @@ enum PickerCellType : Int {
     case sortby = 1
 }
 
+@objc protocol PickerCellDelegate {
+    optional func pickerCell(pickerCell: PickerCell, didSelectRow row: Int)
+}
+
 class PickerCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    
+    weak var delegate: PickerCellDelegate?
     
     @IBOutlet weak var pickerView: UIPickerView!
     
     var pickerData: [String] = []
+    
     var cellType: PickerCellType = PickerCellType.distance
     
     override func awakeFromNib() {
@@ -49,4 +54,9 @@ class PickerCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource 
         return pickerData[row]
     }
     
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        delegate?.pickerCell!(self, didSelectRow: row);
+        
+    }
 }

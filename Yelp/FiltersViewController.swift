@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol FiltersViewControllerDelegate {
-    optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
+    optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject], isDeal:Bool, distance:Float , sortBy:Int)
 }
 
 enum PrefRowIdentifier : Int {
@@ -18,7 +18,7 @@ enum PrefRowIdentifier : Int {
     case ShowSort = 2
     case ShowCate = 3
 }
-class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
+class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate ,PickerCellDelegate{
 
     
     @IBOutlet weak var tableView: UITableView!
@@ -31,6 +31,9 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     var distance: [String] = []
     var sort: [String] = []
     var isDeal: Bool = false
+    
+    var distanceSelectedIndex : Int = 0
+    var sortBySelectedIndex : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,8 +79,15 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             filters["categories"] = selectedCategories
         }
         
-        delegate?.filtersViewController?(self, didUpdateFilters: filters)
+        //delegate?.filtersViewController?(self, didUpdateFilters: filters)
         
+        let arrDistanceValue : [Float] = yelpDistanceValue()
+        let arrSortValue : [Int] = yelpSortValue()
+        
+        let distanceSelect = arrDistanceValue[distanceSelectedIndex];
+        let sortSelect = arrSortValue[sortBySelectedIndex];
+        
+        delegate?.filtersViewController!(self, didUpdateFilters: filters, isDeal: isDeal, distance: distanceSelect, sortBy: sortSelect)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -107,6 +117,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             
+            cell.delegate = self;
             cell.cellType = SwitchCellType.deal;
             cell.switchLabel.text = "Deal"
             cell.onSwitch.on = isDeal
@@ -117,6 +128,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             let cell = tableView.dequeueReusableCellWithIdentifier("PickerCell", forIndexPath: indexPath) as! PickerCell
             
+            cell.delegate = self;
             cell.cellType = PickerCellType.distance;
             cell.pickerData = distance;
             cell.pickerView .reloadAllComponents()
@@ -136,6 +148,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         case PrefRowIdentifier.ShowCate.rawValue:
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             
+            cell.cellType = SwitchCellType.category;
             cell.switchLabel.text = categories[indexPath.row] ["name"]
             cell.delegate = self
             cell.onSwitch.on = switchStates[indexPath.row] ?? false
@@ -163,18 +176,45 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
-        let indexPath = tableView.indexPathForCell(switchCell)!
         
-        switchStates[indexPath.row] = value
+        if switchCell.cellType == SwitchCellType.deal
+        {
+            isDeal = switchCell.onSwitch.on;
+        }
+        else
+        {
+            let indexPath = tableView.indexPathForCell(switchCell)!
+            
+            switchStates[indexPath.row] = value
+        }
+    }
+    
+    func pickerCell(pickerCell: PickerCell, didSelectRow row: Int) {
         
+        if pickerCell.cellType == PickerCellType.distance
+        {
+            distanceSelectedIndex = row;
+        }
+        else
+        {
+            sortBySelectedIndex = row;
+        }
     }
     
     func yelpDistance() -> [String]{
         return ["0.3 miles","1 miles", "5 miles", "20 miles"]
     }
     
+    func yelpDistanceValue() -> [Float]{
+        return [0.3, 1.0, 5, 20]
+    }
+    
     func yelpSort() -> [String]{
         return ["best match","distance", "highest rated"]
+    }
+    
+    func yelpSortValue() -> [Int]{
+        return [0, 1, 2]
     }
     
     func yelpCategories() -> [[String:String]] {

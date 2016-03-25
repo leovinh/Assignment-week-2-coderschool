@@ -12,8 +12,14 @@ import UIKit
     optional func switchCell(switchCell: SwitchCell, didChangeValue value: Bool)
 }
 
+enum SwitchCellType: Int {
+    case deal = 0
+    case category = 1
+}
+
 class SwitchCell: UITableViewCell {
 
+    var cellType: SwitchCellType = SwitchCellType.deal
     
     @IBOutlet weak var switchLabel: UILabel!
     @IBOutlet weak var onSwitch: UISwitch!
@@ -23,7 +29,7 @@ class SwitchCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        onSwitch.addTarget(self, action: "switchValueChanged", forControlEvents: UIControlEvents.ValueChanged)
+        onSwitch.addTarget(self, action: #selector(SwitchCell.switchValueChanged), forControlEvents: UIControlEvents.ValueChanged)
         
     }
 

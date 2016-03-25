@@ -19,6 +19,7 @@
 		B443D4EB1C9E455000E858AE /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B443D4EA1C9E455000E858AE /* BusinessCell.swift */; };
 		B443D4F31C9E886100E858AE /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B443D4F21C9E886100E858AE /* FiltersViewController.swift */; };
 		B443D4F51C9EFAA500E858AE /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B443D4F41C9EFAA500E858AE /* SwitchCell.swift */; };
+		B4F3F3011CA56FBE005872C2 /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F3F3001CA56FBE005872C2 /* PickerCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B443D4EA1C9E455000E858AE /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		B443D4F21C9E886100E858AE /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		B443D4F41C9EFAA500E858AE /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		B4F3F3001CA56FBE005872C2 /* PickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
 		BBD540129B10DFE60E8C24E2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 			children = (
 				B443D4EA1C9E455000E858AE /* BusinessCell.swift */,
 				B443D4F41C9EFAA500E858AE /* SwitchCell.swift */,
+				B4F3F3001CA56FBE005872C2 /* PickerCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B443D4EB1C9E455000E858AE /* BusinessCell.swift in Sources */,
+				B4F3F3011CA56FBE005872C2 /* PickerCell.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,
 				B443D4F51C9EFAA500E858AE /* SwitchCell.swift in Sources */,

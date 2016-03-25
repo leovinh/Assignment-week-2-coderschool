@@ -12,6 +12,12 @@ import UIKit
     optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
 }
 
+enum PrefRowIdentifier : Int {
+    case ShowDeal = 0
+    case ShowDistance = 1
+    case ShowSort = 2
+    case ShowCate = 3
+}
 class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
 
     
@@ -22,15 +28,19 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var categories: [[String:String]]!
     var switchStates = [Int:Bool]()
-    
+    var distance: [String] = []
+    var sort: [String] = []
+    var isDeal: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-
         
+        distance = yelpDistance()
+        isDeal = false
+        sort = yelpSort()
         categories = yelpCategories()
         
         tableView.dataSource = self
@@ -70,21 +80,86 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        switch section {
+        case  PrefRowIdentifier.ShowDeal.rawValue:
+            return 1
+        case PrefRowIdentifier.ShowDistance.rawValue:
+            return 1
+        case PrefRowIdentifier.ShowSort.rawValue:
+            return 1
+        case PrefRowIdentifier.ShowCate.rawValue:
+            return categories.count
+        default: break
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
         
-        cell.switchLabel.text = categories[indexPath.row] ["name"]
-        cell.delegate = self
         
-      
-        
-        cell.onSwitch.on = switchStates[indexPath.row] ?? false
-        
-        return cell
+        switch indexPath.section {
+        case  PrefRowIdentifier.ShowDeal.rawValue:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            
+            cell.cellType = SwitchCellType.deal;
+            cell.switchLabel.text = "Deal"
+            cell.onSwitch.on = isDeal
+            
+            return cell
+            
+        case PrefRowIdentifier.ShowDistance.rawValue:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("PickerCell", forIndexPath: indexPath) as! PickerCell
+            
+            cell.cellType = PickerCellType.distance;
+            cell.pickerData = distance;
+            cell.pickerView .reloadAllComponents()
+            
+            return cell
+            
+        case PrefRowIdentifier.ShowSort.rawValue:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("PickerCell", forIndexPath: indexPath) as! PickerCell
+            
+            cell.cellType = PickerCellType.sortby;
+            cell.pickerData = sort;
+            cell.pickerView .reloadAllComponents()
+            
+            return cell
+            
+        case PrefRowIdentifier.ShowCate.rawValue:
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            
+            cell.switchLabel.text = categories[indexPath.row] ["name"]
+            cell.delegate = self
+            cell.onSwitch.on = switchStates[indexPath.row] ?? false
+            
+            return cell
+            
+        default:
+        return UITableViewCell()
+        }
+}
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+        switch section {
+        case PrefRowIdentifier.ShowDeal.rawValue:
+            return "Deal"
+        case PrefRowIdentifier.ShowDistance.rawValue:
+            return "Distance"
+        case PrefRowIdentifier.ShowSort.rawValue:
+            return "Sort"
+        case PrefRowIdentifier.ShowCate.rawValue:
+            return "Category"
+            
+        default:
+            return ""
+        }
     }
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
@@ -92,7 +167,14 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         switchStates[indexPath.row] = value
         
-        
+    }
+    
+    func yelpDistance() -> [String]{
+        return ["0.3 miles","1 miles", "5 miles", "20 miles"]
+    }
+    
+    func yelpSort() -> [String]{
+        return ["best match","distance", "highest rated"]
     }
     
     func yelpCategories() -> [[String:String]] {
